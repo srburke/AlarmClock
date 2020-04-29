@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         r = new Runnable(){
         @Override
                 public void run() {
-                    //mTime.setToNow();
-                    //drawingView dv = new drawingView(MainActivity.this, mTime.hour, mTime.minute, mTime.second, mTime.weekDay, mTime.monthDay, getBatteryLevel());
+                    mTime.setToNow();
+                    drawingView dv = new drawingView(MainActivity.this, mTime.hour, mTime.minute, mTime.second, mTime.weekDay, mTime.monthDay, getBatteryLevel());
                     //setContentView(dv);
                     handler.postDelayed(r, 1000);
         }
@@ -84,10 +84,8 @@ public class MainActivity extends AppCompatActivity {
     public class drawingView extends View{
         Paint mBackgroundPaint, mTextPaint, mTextPaintBack;
         Typeface tf;
-
         int hours, minutes, seconds, weekday, date;
         float battery;
-
         public drawingView(Context context, int hours, int minutes, int seconds, int weekday, int date, float battery){
             super(context);
 

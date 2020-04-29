@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
@@ -22,12 +23,14 @@ import java.util.Calendar;
 
 public class AlarmActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
     private TextView mTextView;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-
+        mediaPlayer = MediaPlayer.create(this,R.raw.alarm);
         mTextView = findViewById(R.id.textView);
 
         Button buttonTimePicker = findViewById(R.id.button_timepicker);
@@ -44,6 +47,7 @@ public class AlarmActivity extends AppCompatActivity implements TimePickerDialog
             @Override
             public void onClick(View v) {
                 cancelAlarm();
+                mediaPlayer.stop();
             }
         });
     }
@@ -58,6 +62,8 @@ public class AlarmActivity extends AppCompatActivity implements TimePickerDialog
 
         updateTimeText(c);
         startAlarm(c);
+
+
     }
 
     private void updateTimeText(Calendar c) {
@@ -76,8 +82,8 @@ public class AlarmActivity extends AppCompatActivity implements TimePickerDialog
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
         }
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
     }
 
     private void cancelAlarm() {

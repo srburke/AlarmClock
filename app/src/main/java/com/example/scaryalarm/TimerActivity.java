@@ -174,6 +174,7 @@ public class TimerActivity extends AppCompatActivity {
                 mButtonStop.setVisibility(View.VISIBLE);
             } else {
                 mButtonReset.setVisibility(View.INVISIBLE);
+                mButtonStop.setVisibility(View.INVISIBLE);
             }
         }
     }

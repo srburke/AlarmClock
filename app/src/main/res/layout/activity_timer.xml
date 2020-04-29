@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".TimerActivity">
 
+    <View
+        android:id="@+id/view4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"/>
+
+
     <EditText
         android:id="@+id/edit_text_input"
         android:layout_width="120dp"
@@ -13,6 +22,7 @@
         android:layout_above="@+id/text_view_countdown"
         android:layout_centerHorizontal="true"
         android:hint="Minutes"
+        android:textColorHint="@color/white"
         android:inputType="number"
         android:maxLength="4"/>
 
@@ -31,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="00:00"
-        android:textColor="@android:color/black"
+        android:textColor="@color/white"
         android:textSize="60sp" />
 
     <Button
@@ -71,5 +81,7 @@
         android:layout_marginLeft="160dp"
         android:layout_marginBottom="183dp"
         android:text="Stop Sound" />
+
+
 
 </RelativeLayout>
