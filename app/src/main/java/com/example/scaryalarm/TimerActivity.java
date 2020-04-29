@@ -1,6 +1,7 @@
 package com.example.scaryalarm;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button mButtonSet;
     private Button mButtonStartPause;
     private Button mButtonReset;
+    private Button mButtonStop;
 
     private CountDownTimer mCountDownTimer;
 
@@ -30,6 +32,8 @@ public class TimerActivity extends AppCompatActivity {
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
     private long mEndTime;
+
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class TimerActivity extends AppCompatActivity {
         mButtonSet = findViewById(R.id.button_set);
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        mButtonStop = findViewById(R.id.button_stop);
 
         mButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +85,13 @@ public class TimerActivity extends AppCompatActivity {
                 resetTimer();
             }
         });
+
+        mButtonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.stop();
+            }
+        });
     }
 
     private void setTime(long milliseconds) {
@@ -90,7 +102,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void startTimer() {
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
-
+        mediaPlayer = MediaPlayer.create(this,R.raw.alarm);
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -101,6 +113,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 mTimerRunning = false;
+                mediaPlayer.start();
                 updateWatchInterface();
             }
         }.start();
@@ -143,6 +156,7 @@ public class TimerActivity extends AppCompatActivity {
             mEditTextInput.setVisibility(View.INVISIBLE);
             mButtonSet.setVisibility(View.INVISIBLE);
             mButtonReset.setVisibility(View.INVISIBLE);
+            mButtonStop.setVisibility(View.INVISIBLE);
             mButtonStartPause.setText("Pause");
         } else {
             mEditTextInput.setVisibility(View.VISIBLE);
@@ -157,6 +171,7 @@ public class TimerActivity extends AppCompatActivity {
 
             if (mTimeLeftInMillis < mStartTimeInMillis) {
                 mButtonReset.setVisibility(View.VISIBLE);
+                mButtonStop.setVisibility(View.VISIBLE);
             } else {
                 mButtonReset.setVisibility(View.INVISIBLE);
             }
